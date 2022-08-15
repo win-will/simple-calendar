@@ -85,7 +85,8 @@ for (let i=9;i < 18;i++) {
     // console.log(lockButton);
     $('#lock-btn'+i).on('click', function () {
         var field = $('#field'+i);
-        obj[i] = field[0].innerHTML;
+        obj[i] = field[0].value;
+        console.log(field[0].value)
         localStorage.setItem("simpleCalendar", JSON.stringify(obj))
         
     });
