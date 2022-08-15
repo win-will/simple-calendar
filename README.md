@@ -29,6 +29,6 @@ WHEN I refresh the page
 THEN the saved events persist
 ```
 
-##Mockup
+## Mockup
 
 ![A user clicks on slots on the color-coded calendar and edits the events.](./assets/images/05-third-party-apis-homework-demo.gif)
