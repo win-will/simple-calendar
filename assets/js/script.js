@@ -1,15 +1,52 @@
-
+//intialize variables storing date information
 var today = moment();
 var dayWeek = today.format("dddd")
-$("#currentDay").text(dayWeek + ", " + today.format("MMM Do"));
+var currentDay = dayWeek + "_" + today.format("MMM") + "_" + today.format("Do")
+
+//Get main element so we can append the table to it later
 var container = document.getElementById("container"); 
 
-// console.log(localStorage.getItem('simpleCalendar'));
+//Add current day and date to the heading
+$("#currentDay").text(dayWeek + ", " + today.format("MMM Do"));
 
 //initialize local storage if it doesn't exist create it, else import object from local storage
 var obj = {};
+var dateEntry = {};
+var jsonIndex = null;
+
 if (localStorage.getItem('simpleCalendar') === null){
     obj = {
+        dateEntries: [{
+            9: "",
+            10: "",
+            11: "",
+            12: "",
+            13: "",
+            14: "",
+            15: "",
+            16: "",
+            17: "",
+            date: currentDay
+        }]
+    };
+}
+else {
+    obj = JSON.parse(window.localStorage.getItem('simpleCalendar'));
+
+}
+
+//Check if the date exists in the simpleCalender local storage
+//jsonIndex will track the location of the item with the current date
+for (let i = 0;i < obj['dateEntries'].length; i++){
+    if (obj['dateEntries'][i].date === currentDay){
+        jsonIndex = i;
+        break;
+    }
+}
+
+//When date doesn't exist then add a new element to the timeEntries array
+if (jsonIndex === null){
+    obj['dateEntries'].push({
         9: "",
         10: "",
         11: "",
@@ -18,15 +55,14 @@ if (localStorage.getItem('simpleCalendar') === null){
         14: "",
         15: "",
         16: "",
-        17: ""
-    };
+        17: "",
+        date: currentDay
+    });
+    jsonIndex = obj['dateEntries'].length - 1;
+    
 }
-else {
-    obj = JSON.parse(window.localStorage.getItem('simpleCalendar'));
 
-}
-
-
+//Creating table for the calendar
 //set header of table
 var time = "";
 var colorScheme = "";
@@ -52,7 +88,7 @@ let table = `
         colorScheme = "present";
     }
 
-    //set the time to 12 hour
+    //set the time to 12 hour time to adhere to the mock up
     if (i < 13) {
         time = i + " AM";
     }
@@ -60,9 +96,9 @@ let table = `
         time = (i - 12) + " PM";
     } 
 
-    //Check if anything is in local storage for each row    
-    if (obj[i]){
-        cellData = obj[i];
+    //Check if anything is in local storage for each row
+    if (obj['dateEntries'][jsonIndex][i]){
+        cellData = obj['dateEntries'][jsonIndex][i];
     }
 
     //create rows in table
@@ -79,14 +115,14 @@ table = table + `</tbody></table>`;
 container.innerHTML = table;
 
 
-var eachButton = "";
+//Create buttons for each row in the table 
+//Add entries to local storage when the buttons are clicked
 for (let i=9;i < 18;i++) {
 
-    // console.log(lockButton);
     $('#lock-btn'+i).on('click', function () {
         var field = $('#field'+i);
-        obj[i] = field[0].value;
-        console.log(field[0].value)
+        obj['dateEntries'][jsonIndex][i] = field[0].value;
+        console.log(obj['dateEntries'][jsonIndex][i])
         localStorage.setItem("simpleCalendar", JSON.stringify(obj))
         
     });

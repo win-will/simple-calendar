@@ -9,8 +9,6 @@ textarea {
   border: none;
   resize: none;
   color: #000000;
-  
-  /* padding: 10px; */
   height: 100%;
   width: 100%;
 }
@@ -70,9 +68,6 @@ textarea {
   border-top:0px;
   border-right: 0px;
   border-bottom: 0px;
-  
-  /* display: block;
-  margin: auto; */
 }
 
 .saveBtn i:hover {
@@ -83,7 +78,6 @@ textarea {
 .lastCell {
   padding: 0 !important;
   border: none !important;
-
 }
 
 button {
@@ -95,7 +89,6 @@ button {
   padding-left: 0 !important;
   padding-right: 0 !important;
   border-left: 1px solid black;
-
 }
 
 
